@@ -31,4 +31,22 @@ class ExempleController extends AbstractController
     public function random($name) {
         return new Response('Hello ' . $name . ' !');
     }
+
+    /**
+     * @Route("/questions/{slug}")
+     */
+    public function show($slug)
+    {
+        $answers = [
+            'réponse liongue 1',
+            'reponse aussi longue 2',
+            'toujours plus 3',
+        ];
+
+        return $this->render('question/show.html.twig',[
+            'question' => ucwords(str_replace('-',' ',$slug)),
+            'answers' => $answers,
+        ]);
+    }
+
 }
