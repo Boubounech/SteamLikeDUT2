@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; // Nouveau use
 class ExempleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="index")
      **/
     public function index() {
         return new Response('Hello world !'); // Nous utilisons le paquet Response (obligatoire sinon erreur de symfony)
@@ -26,7 +26,7 @@ class ExempleController extends AbstractController
     }
 
     /**
-     * @Route("/saymyname/{name}")
+     * @Route("/saymyname/{name}", name="random")
      **/
     public function random($name) {
         return new Response('Hello ' . $name . ' !');
