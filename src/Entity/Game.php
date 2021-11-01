@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-//use App\Repository\GameRepository;
+use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  *
@@ -12,8 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  *     collectionOperations={"get","post"},
  *     itemOperations={"get", "put"}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial"})
  *
- * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @ORM\Entity(repositoryClass=GameRepository::class)
  */
 
 class Game
