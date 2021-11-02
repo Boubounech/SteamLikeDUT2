@@ -7,14 +7,22 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  *
  * @ApiResource(
  *     collectionOperations={"get","post"},
- *     itemOperations={"get", "put"}
+ *     itemOperations={"get", "put", "delete"},
+ *     normalizationContext={"groups"={"game:read"}},
+ *     denormalizationContext={"groups"={"game:write"}},
  * )
- * @ApiFilter(SearchFilter::class, properties={"title": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "title": "partial",
+ *     "description": "partial",
+ *     "owner": "exact",
+ *     "owner.username": "partial"
+ * })
  *
  * @ORM\Entity(repositoryClass=GameRepository::class)
  */
@@ -32,28 +40,39 @@ class Game
      * The title of the game you're looking at
      *
      * @ORM\Column(type="string", length=255)
+     * @Groups({"game:read", "game:write", "user:read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"game:read", "game:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"game:read", "game:write"})
      */
     private $link;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"game:read", "user:read"})
      */
     private $dlNumber;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"game:read", "game:write"})
      */
-    private $creator;
+    private $owner;
+
+    public function __construct()
+    {
+        $this->dlNumber = 0;
+    }
 
     public function getId(): ?int
     {
@@ -108,14 +127,14 @@ class Game
         return $this;
     }
 
-    public function getCreator(): ?int
+    public function getOwner(): ?User
     {
-        return $this->creator;
+        return $this->owner;
     }
 
-    public function setCreator(int $creator): self
+    public function setOwner(?User $owner): self
     {
-        $this->creator = $creator;
+        $this->owner = $owner;
 
         return $this;
     }
