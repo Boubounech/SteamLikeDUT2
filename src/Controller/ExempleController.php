@@ -13,7 +13,9 @@ class ExempleController extends AbstractController
      * @Route("/", name="index")
      **/
     public function index() {
-        return new Response('Hello world !'); // Nous utilisons le paquet Response (obligatoire sinon erreur de symfony)
+        return $this->render('index.html.twig', [
+            'title' => 'hello world'
+        ]);
     }
 
     /**
