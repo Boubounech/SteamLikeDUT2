@@ -13,7 +13,7 @@
 
                     <div class="col-12">
                         <label for="inputEmail">Email</label>
-                        <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+                        <input type="email" name="email" id="inputEmail" value="{{ last_username }}" class="form-control" required autofocus>
                     </div>
                     <div class="col-12">
                         <label for="inputPassword">Password</label>
@@ -24,6 +24,14 @@
                             Sign in
                         </button>
                     </div>
+                    <div class="form-check mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me" class="form-check-input"> Remember me
+                        </label>
+                    </div>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
                 </form>
             </div>
         </div>
