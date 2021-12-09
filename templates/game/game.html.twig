@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeu : {{ game.title }}{% endblock %}
+
+{%  block body %}
+    <h1>{{ game.title }}</h1>
+    <p>Le créateur est {{ user.username }} .</p>
+    <a href="{{ path("index") }}">Revenir à l'accueil</a>
+{% endblock %}

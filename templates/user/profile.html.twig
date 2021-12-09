@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{%  block body %}
+    <h1>Mon Profil</h1>
+    <p>Mec t'es beau gosse <3</p>
+    <p>Vous êtes connecté en tant que « {{ app.user.username }} .»</p>
+    <p>Votre adresse mél est « {{ app.user.email }} .»</p>
+    <br>
+    <a href="{{ path("ChangeInfos") }}">Changer mes Informations</a>
+{% endblock %}

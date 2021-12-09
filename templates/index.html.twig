@@ -5,5 +5,10 @@
 {% block title %}Homepage !{% endblock %}
 
 {% block body %}
-    <h1>{{ title }}</h1>
+    <h1>Bienvenue sur STeAM</h1>
+    <p>Voilà les 5 jeux les plus récents : </p>
+    {% for game in games|slice(games|length-5, games|length) %}
+        <h3>{{ game.title }}</h3>
+        <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+    {% endfor %}
 {% endblock %}
