@@ -27,7 +27,8 @@ security:
                 username_parameter: email
                 password_parameter: password
                 enable_csrf: true
-            logout: true
+            logout:
+                path: app_logout
             remember_me:
                 secret: '%kernel.secret%'
                 signature_properties: [password]
@@ -41,5 +42,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/logout, roles: ROLE_ADMIN }
+         - { path: ^/logout, roles: ROLE_USER }
          - { path: ^/profile, roles: ROLE_USER }

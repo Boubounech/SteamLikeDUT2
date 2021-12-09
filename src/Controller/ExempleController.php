@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response; // Attention très important utilisez bien ce paquet sinon vous allez avoir une erreur
 use Symfony\Component\Routing\Annotation\Route; // Nouveau use pour les annotations
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; // Nouveau use pour importer l'abstract controller
@@ -48,6 +49,17 @@ class ExempleController extends AbstractController
         return $this->render('question/show.html.twig',[
             'question' => ucwords(str_replace('-',' ',$slug)),
             'answers' => $answers,
+        ]);
+    }
+
+    /**
+     * @Route("/api/me", name="api_me")
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function apiMe()
+    {
+        return $this->json($this->getUser(), 200, [], [
+            'groups' => ['user:read']
         ]);
     }
 

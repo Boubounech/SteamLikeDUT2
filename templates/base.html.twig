@@ -23,8 +23,12 @@
                 <i style="color: #444; font-size: 2rem;" class="pb-1 fad fa-cauldron"></i>
                 <p class="pl-2 d-inline font-weight-bold" style="color: #444;">Cauldron Overflow</p>
             </a>
-            <button class="btn btn-dark">Sign up</button>
-            <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In</a>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}" class="btn btn-dark">Log out</a>
+            {% else %}
+                <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In</a>
+                <a href="{{ path('app_register') }}" class="btn btn-dark">Sign up</a>
+            {% endif %}
         </nav>
     {% endblock %}
         {% block body %}{% endblock %}
