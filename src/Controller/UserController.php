@@ -16,10 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/profile", name="Profil")
+     * @Route("/profile", name="app_profile")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
-    public function index(): Response
+    public function profile(): Response
     {
         $games = $this->getDoctrine()->getManager()->getRepository(Game::class)
             ->findBy(array("owner" => $this->getUser()->getId()));

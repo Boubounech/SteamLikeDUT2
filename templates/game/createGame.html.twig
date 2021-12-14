@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Publier un jeu{% endblock %}
+
+{%  block body %}
+    <h1>Ajouter un Jeu</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.link) }}
+        {{ form_row(form.description) }}
+        <button type="submit">Publier le Jeu</button>
+    {{ form_end(form) }}
+{% endblock %}

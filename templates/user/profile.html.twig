@@ -9,4 +9,8 @@
     <p>Votre adresse mél est « {{ app.user.email }} .»</p>
     <br>
     <a href="{{ path("ChangeInfos") }}">Changer mes Informations</a>
+    {% for game in games %}
+        <p>{{ game.title }}</p>
+        <a href="{{ path("CreateGame") }}">Changer les informations de ce jeu</a>
+    {% endfor %}
 {% endblock %}

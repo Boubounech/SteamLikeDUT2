@@ -11,4 +11,6 @@
         <h3>{{ game.title }}</h3>
         <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
     {% endfor %}
+    <br>
+    <a href="{{ path("allGames") }}">Voir tous les jeux</a>
 {% endblock %}

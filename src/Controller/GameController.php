@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\User;
+use App\Form\GameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +70,50 @@ class GameController extends AbstractController
         $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
         return $this->render("game/allGames.html.twig", [
             "games" => $games
+        ]);
+    }
+
+    /**
+     * @Route("/createGame", name="CreateGame")
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function createGame(Request $request) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $game = new Game();
+
+        $game->setOwner($this->getUser());
+        $game->setDlnumber(0);
+
+        $form = $this->createForm(GameType::class, $game)->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($game);
+            $em->flush();
+            return $this->redirectToRoute("game", ["id" => $game->getId()]);
+        }
+
+        return $this->render("game/createGame.html.twig", [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/changeGame-{id}", name="ChangeGameInfos")
+     */
+    public function changeGameName(Game $game, Request $request) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(GameType::class, $game)->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($game);
+            $em->flush();
+            return $this->redirectToRoute("OneGame", ["id" => $game->getId()]);
+        }
+
+        return $this->render("changeGame.html.twig", [
+            "form" => $form->createView()
         ]);
     }
 

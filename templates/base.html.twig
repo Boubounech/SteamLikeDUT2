@@ -24,10 +24,12 @@
                 <p class="pl-2 d-inline font-weight-bold" style="color: #444;">Cauldron Overflow</p>
             </a>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <a href="{{ path('app_logout') }}" class="btn btn-dark">Log out</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-dark">Se Déconnecter</a>
+                <a href="{{ path('app_profile') }}" class="btn btn-dark">Mon Profil</a>
+                <a href="{{ path('CreateGame') }}" class="btn btn-dark">Publier Un jeu</a>
             {% else %}
-                <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In</a>
-                <a href="{{ path('app_register') }}" class="btn btn-dark">Sign up</a>
+                <a class="nav-link text-black-50" href="{{ path('app_login') }}">Se Connecter</a>
+                <a href="{{ path('app_register') }}" class="btn btn-dark">Créer un compte</a>
             {% endif %}
         </nav>
     {% endblock %}

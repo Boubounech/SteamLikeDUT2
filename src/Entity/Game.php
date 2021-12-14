@@ -69,6 +69,11 @@ class Game
      */
     private $owner;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->dlNumber = 0;
@@ -135,6 +140,18 @@ class Game
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -5,5 +5,12 @@
 {%  block body %}
     <h1>{{ game.title }}</h1>
     <p>Le créateur est {{ user.username }} .</p>
+    {% if user == connectedUser %}
+        <a href="{{ path("ChangeGameInfos", {id:game.id}) }}">Modifier les données du jeu</a>
+    {% endif %}
+    <p>Description : {{ game.description }}</p>
+    <p>Catégorie : {{ game.category }}</p>
+    <p>Télécharger le jeu : <a href="{{ game.link }}">{{ game.link }}</a></p>
     <a href="{{ path("index") }}">Revenir à l'accueil</a>
+
 {% endblock %}
