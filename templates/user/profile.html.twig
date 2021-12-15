@@ -4,13 +4,37 @@
 
 {%  block body %}
     <h1>Mon Profil</h1>
-    <p>Mec t'es beau gosse <3</p>
-    <p>Vous êtes connecté en tant que « {{ app.user.username }} .»</p>
-    <p>Votre adresse mél est « {{ app.user.email }} .»</p>
-    <br>
-    <a href="{{ path("ChangeInfos") }}">Changer mes Informations</a>
-    {% for game in games %}
-        <p>{{ game.title }}</p>
-        <a href="{{ path("CreateGame") }}">Changer les informations de ce jeu</a>
-    {% endfor %}
+    <div class="ProfilePage">
+        <div class="GamesInProfile">
+            <h2>Jeux publiés</h2>
+            <div class="ProfileCase">
+                {% for game in games %}
+                    <h2>{{ game.title }}</h2>
+                    <p>{{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %}.</p>
+                    <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ProfileInfos">
+            <h2>Mes Informations</h2>
+            <div class="ProfileCase">
+                <p style="text-align: center">Nom d'utilisateur : {{ app.user.username }}</p>
+                <p style="text-align: center">Adresse mél : {{ app.user.email }}</p>
+                <a href="{{ path("ChangeInfos") }}">Changer mes Informations</a>
+            </div>
+        </div>
+        <div class="CommentsInProfile">
+            <h2>Mes Commentaires</h2>
+            <div class="ProfileCase">
+                {% for comment in app.user.comments %}
+                    <h2>{{ comment.game.title }}</h2>
+                    <p>{{ comment.content }}</p>
+                    <a href="{{ path("game", {id:comment.game.id}) }}">Voir plus sur {{ comment.game.title }}.</a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+    </div>
 {% endblock %}

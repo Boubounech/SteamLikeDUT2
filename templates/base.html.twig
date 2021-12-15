@@ -6,10 +6,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/app_base.css') }}">
         {% endblock %}
 
         {% block javascripts %}
@@ -18,24 +15,30 @@
     </head>
     <body>
     {% block navi %}
-        <nav class="navbar navbar-light bg-light" style="height: 100px;">
-            <a class="navbar-brand" href="{{ path("index") }}">
-                <i style="color: #444; font-size: 2rem;" class="pb-1 fad fa-cauldron"></i>
-                <p class="pl-2 d-inline font-weight-bold" style="color: #444;">Cauldron Overflow</p>
-            </a>
+        <nav>
+            <div class="NavButtonBox">
+                <a id="LogoButton"  href="{{ path("index") }}"><p>STeAM</p></a>
+                <a class="NavButton" href="{{ path("index") }}">Accueil</a>
+                <a class="NavButton" href="{{ path("allGames") }}">Bibliothèque</a>
+                <a class="NavButton" href="{{ path("SearchGames") }}">Rechercher</a>
+            </div>
+            <div class="NavButtonBox">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <a href="{{ path('app_logout') }}" class="btn btn-dark">Se Déconnecter</a>
-                <a href="{{ path('app_profile') }}" class="btn btn-dark">Mon Profil</a>
-                <a href="{{ path('CreateGame') }}" class="btn btn-dark">Publier Un jeu</a>
+                <a class="NavButton" href="{{ path('app_logout') }}">Se Déconnecter</a>
+                <a class="NavButton" href="{{ path('app_profile') }}">Mon Profil</a>
+                <a class="NavButton" href="{{ path('CreateGame') }}">Publier Un jeu</a>
             {% else %}
-                <a class="nav-link text-black-50" href="{{ path('app_login') }}">Se Connecter</a>
-                <a href="{{ path('app_register') }}" class="btn btn-dark">Créer un compte</a>
+                <a class="NavButton" href="{{ path('app_login') }}">Se Connecter</a>
+                <a class="NavButton" href="{{ path('app_register') }}">Créer un compte</a>
             {% endif %}
+            </div>
         </nav>
     {% endblock %}
+    <div class="BodyContent">
         {% block body %}{% endblock %}
+    </div>
     {% block footer %}
-        <footer class="mt-5 p-3 text-center">
+        <footer>
         </footer>
     {% endblock %}
     </body>

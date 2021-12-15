@@ -4,14 +4,15 @@
 
 {% block body %}
 
-    <h1>Entrer les nouvelles valeurs : </h1>
-
+    <h1>Changer les données du compte</h1>
     {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword, {
-        label: 'Password'
-    }) }}
-    <button type="submit" class="btn"> Valider </button>
+    <div class="FormUser">
+        <div class="FormPart">{{ form_row(form.username) }}</div>
+        <div class="FormPart">{{ form_row(form.email) }}</div>
+        <div class="FormPart">{{ form_row(form.plainPassword, {
+            label: 'Password'
+        }) }}</div>
+        <button type="submit" class="SubmitButton"> Valider </button>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

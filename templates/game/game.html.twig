@@ -3,28 +3,43 @@
 {% block title %}Jeu : {{ game.title }}{% endblock %}
 
 {%  block body %}
-    <h1>{{ game.title }}</h1>
-    <p>Le créateur est {{ user.username }} .</p>
-    {% if user == connectedUser %}
-        <a href="{{ path("ChangeGameInfos", {id:game.id}) }}">Modifier les données du jeu</a>
-    {% endif %}
-    <p>Description : {{ game.description }}</p>
-    <p>Catégorie : {{ game.category }}</p>
-    <p>Télécharger le jeu : <a href="{{ path("RedirectToGameLink", {id:game.id}) }}">{{ game.link }}</a></p>
-    <p>Déja {{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %} !</p>
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <p>Ajouter un commentaire : </p>
-        {{ form_start(form) }}
-        {{ form_row(form.content) }}
-        <button type="submit">Publier le commentaire</button>
-        {{ form_end(form) }}
-    {% endif %}
-    <p>Les commentaires des internautes sur le jeu : </p>
-    <ul>
-        {% for comment in game.comments %}
-            <li>{{ comment.owner.username }} : {{ comment.content }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path("index") }}">Revenir à l'accueil</a>
+    <div class="GamePage">
+        <h1>{{ game.title }}</h1>
+        <div class="GamePresentation">
+            <div class="GameInfos">
+                <p class="GameInfoPart">Créateur : <p>{{ user.username }}</p></p>
+                <p class="GameInfoPart">Description : <p>{{ game.description }}</p></p>
+                <p class="GameInfoPart">Catégorie : <p>{{ game.category }}</p></p>
+                <p class="GameInfoPart">Télécharger le jeu : <p><a href="{{ path("RedirectToGameLink", {id:game.id}) }}">{{ game.link }}</a></p></p>
+                <p class="GameInfoPart" style="text-decoration: none">Déja {{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %} !</p>
+                <p></p>
+                <div>
+                    {% if user == connectedUser %}
+                        <p style="font-style: italic">Espace Créateur :</p>
+                        <a  href="{{ path("ChangeGameInfos", {id:game.id}) }}">Modifier les données du jeu</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="Comments">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <p>Ajouter un commentaire : </p>
+                    <div class="NewComment">
+                        {{ form_start(form) }}
+                        {{ form_row(form.content) }}
+                        <button type="submit" class="SubmitButton">Publier le commentaire</button>
+                        {{ form_end(form) }}
+                    </div>
+                {% endif %}
+                <p>Les commentaires des internautes sur le jeu : </p>
+                <ul>
+                    {% for comment in game.comments %}
+                        <li>{{ comment.owner.username }} : {{ comment.content }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <a href="{{ path("index") }}">Revenir à l'accueil</a>
+    </div>
+
 
 {% endblock %}

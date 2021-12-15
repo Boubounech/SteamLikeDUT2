@@ -1,0 +1,240 @@
+* {
+    font-family: "lucida sans", sans-serif;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    color: #b3b3b3;
+}
+
+p {
+    outline: none;
+    margin: 5px 0 5px 0;
+    padding: unset;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.SubmitButton {
+    margin: 10px 0 10px 0;
+    background-color: #0d084d;
+    color: #b3b3b3;
+    padding: 10px;
+}
+
+nav {
+    background-color: #0a053b;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 5px solid white;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 98%;
+}
+
+.NavButtonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#LogoButton {
+    margin: auto 10px auto 10px;
+}
+
+.NavButton {
+    margin: auto 10px auto 10px;
+    background-color: #0d084d;
+    padding: 10px;
+}
+
+.NavButton:focus {
+    background: #282087;
+    color: white;
+}
+
+.NavButton:hover {
+    background: #282087;
+    color: white;
+}
+
+body {
+    background-color: #0d084d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.BodyContent {
+    background-color: #0a053b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 50px 30px 50px;
+    border: 1px solid white;
+}
+
+.GamesInList {
+    background-color: #0a053b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+    padding: 10px 50px 30px 50px;
+    border-top: 1px solid white;
+    margin-top: 10px;
+}
+
+.GamePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.GamePresentation {
+    display: flex;
+    flex-direction: row;
+}
+
+.GameInfos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: auto 10px auto 10px;
+    width: 50%;
+}
+
+.GameInfoPart {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    text-decoration: underline;
+}
+
+.Comments {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: auto 10px auto 10px;
+    width: 50%;
+}
+
+.NewComment {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.SearchPage {
+    display: flex;
+    flex-direction: row;
+}
+
+.SearchFormPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: auto 10px auto 10px;
+    width: 50%;
+}
+
+.SearchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.FormPart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px 0 5px 0;
+}
+
+.SearchResultPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ProfilePage {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    background-color: #0d084d;
+    padding: 20px;
+}
+
+.ProfileInfos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    flex-wrap: wrap;
+    margin: auto 25px auto 25px;
+    background-color: #0a053b;
+    min-height: 200px;
+    padding-top: 25px;
+}
+
+.GamesInProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    flex-wrap: wrap;
+    background-color: #0a053b;
+    padding-bottom: 20px;
+}
+
+.CommentsInProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    flex-wrap: wrap;
+    background-color: #0a053b;
+    padding: 0 20px 20px 20px;
+}
+
+.ProfileCase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.FormUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.FormPart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.DeleteButton {
+    margin: 10px 0 10px 0;
+    background-color: darkred;
+    color: #b3b3b3;
+    padding: 10px;
+    border: 1px solid white
+}

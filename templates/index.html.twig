@@ -8,9 +8,13 @@
     <h1>Bienvenue sur STeAM</h1>
     <p>Voilà les 5 jeux les plus récents : </p>
     {% for game in games|slice(games|length-5, games|length) %}
-        <h3>{{ game.title }}</h3>
-        <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+        <div class="GamesInList">
+            <h2>{{ game.title }}</h2>
+            <p>{{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %}.</p>
+            <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+        </div>
     {% endfor %}
-    <br>
-    <a href="{{ path("allGames") }}">Voir tous les jeux</a>
+    <p></p>
+    <p></p>
+    <a href="{{ path("allGames") }}">Voir la bibliothèque de jeux</a>
 {% endblock %}

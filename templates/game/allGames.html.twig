@@ -7,7 +7,10 @@
     <p>Ci-dessous, la liste de tous les jeux</p>
     <a href="{{ path("SearchGames") }}">Rechercher des jeux</a>
     {% for game in games %}
-        <h3>{{ game.title }}</h3>
-        <a href="{{ path("game", {id:game.id}) }}">Voir plus.</a>
+        <div class="GamesInList">
+            <h2>{{ game.title }}</h2>
+            <p>{{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %}.</p>
+            <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+        </div>
     {% endfor %}
 {% endblock %}

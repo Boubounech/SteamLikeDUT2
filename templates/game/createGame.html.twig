@@ -4,11 +4,14 @@
 
 {%  block body %}
     <h1>Ajouter un Jeu</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.category) }}
-        {{ form_row(form.link) }}
-        {{ form_row(form.description) }}
-        <button type="submit">Publier le Jeu</button>
-    {{ form_end(form) }}
+
+        {{ form_start(form) }}
+        <div class="FormUser">
+            <div class="FormPart">{{ form_row(form.title) }}</div>
+            <div class="FormPart">{{ form_row(form.category) }}</div>
+            <div class="FormPart">{{ form_row(form.link) }}</div>
+            <div class="FormPart">{{ form_row(form.description) }}</div>
+            <button type="submit" class="SubmitButton">Publier le Jeu</button>
+        </div>
+        {{ form_end(form) }}
 {% endblock %}

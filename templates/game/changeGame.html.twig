@@ -3,13 +3,15 @@
 {% block title %}Changer les Informations du Jeu{% endblock %}
 
 {%  block body %}
-    <h1>Ajouter un Jeu</h1>
+    <h1>Changer les données de {{ game.title }}</h1>
     {{ form_start(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.category) }}
-    {{ form_row(form.link) }}
-    {{ form_row(form.description) }}
-    <button type="submit">Changer les informations</button>
+    <div class="FormUser">
+        <div class="FormPart">{{ form_row(form.title) }}</div>
+        <div class="FormPart">{{ form_row(form.category) }}</div>
+        <div class="FormPart">{{ form_row(form.link) }}</div>
+        <div class="FormPart">{{ form_row(form.description) }}</div>
+    <button type="submit" class="SubmitButton">Changer les informations</button>
+    </div>
     {{ form_end(form) }}
-    <a href="{{ path("DeleteGame", {id:game.id}) }}">Supprimer le jeu</a>
+    <a class="DeleteButton" href="{{ path("DeleteGame", {id:game.id}) }}">Supprimer le jeu</a>
 {% endblock %}

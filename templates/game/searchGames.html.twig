@@ -4,28 +4,48 @@
 
 {%  block body %}
     <h1>Bibliothèque</h1>
-    <p>Rechercher</p>
-    <form action="{{ path("SearchGames") }}" method="get">
-        <label for="tit">Titre : </label>
-        <input type="text" name="tit" id="tit">
-
-        <label for="cate">Catégorie : </label>
-        <select name="cate" id="cate">
-            <option value="">--Choisir une Catégorie--</option>
-            <option value="R-18 Games">R-18 Games</option>
-            <option value="Familial">Familial</option>
-            <option value="Science-Fiction">Science-Fiction</option>
-            <option value="Historique">Historique</option>
-        </select>
-        <button type="submit"> Rechercher </button>
-    </form>
-    <p>Vous avez cherché : </p>
-    <p>Nom = {{ title }}</p>
-    <p>Catégorie = {{ category }}</p>
-    <p>Voilà les résulats de la recherche : </p>
-    {% for game in games %}
-        <h3>{{ game.title }}</h3>
-        <a href="{{ path("game", {id:game.id}) }}">Voir plus.</a>
-    {% endfor %}
+    <div class="SearchPage">
+        <div class="SearchFormPage">
+            <form class="SearchForm" action="{{ path("SearchGames") }}" method="get">
+                <div class="FormPart">
+                    <label for="tit" class="SearchFormPart">Titre : </label>
+                    <input type="text" name="tit" id="tit" class="SearchFormPart">
+                </div>
+                <div class="FormPart">
+                    <label for="cate" class="SearchFormPart">Catégorie : </label>
+                    <select name="cate" id="cate" class="SearchFormPart">
+                        <option value="">--Choisir une Catégorie--</option>
+                        <option value="R-18 Games">R-18 Games</option>
+                        <option value="Familial">Familial</option>
+                        <option value="Science-Fiction">Science-Fiction</option>
+                        <option value="Historique">Historique</option>
+                    </select>
+                </div>
+                <button type="submit" class="SubmitButton"> Rechercher </button>
+            </form>
+            {% if title != null or category != null %}
+                <p>Vous avez cherché : </p>
+                {% if title != null %}
+                    <p>Titre : {{ title }}</p>
+                {% endif %}
+                {% if category != null %}
+                    <p>Catégorie : {{ category }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="SearchResultPage">
+            {% if title != null or category != null %}
+                <p style="text-align: center">Résultats de la recherche : </p>
+                {% for game in games %}
+                    <div class="GamesInList">
+                        <h2>{{ game.title }}</h2>
+                        <p>{{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %}.</p>
+                        <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <p></p>
     <a href="{{ path("index") }}">Revenir à l'accueil</a>
 {% endblock %}
