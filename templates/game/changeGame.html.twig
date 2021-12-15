@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Changer les Informations du Jeu{% endblock %}
+
+{%  block body %}
+    <h1>Ajouter un Jeu</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.link) }}
+    {{ form_row(form.description) }}
+    <button type="submit">Changer les informations</button>
+    {{ form_end(form) }}
+    <a href="{{ path("DeleteGame", {id:game.id}) }}">Supprimer le jeu</a>
+{% endblock %}

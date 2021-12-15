@@ -10,7 +10,21 @@
     {% endif %}
     <p>Description : {{ game.description }}</p>
     <p>Catégorie : {{ game.category }}</p>
-    <p>Télécharger le jeu : <a href="{{ game.link }}">{{ game.link }}</a></p>
+    <p>Télécharger le jeu : <a href="{{ path("RedirectToGameLink", {id:game.id}) }}">{{ game.link }}</a></p>
+    <p>Déja {{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %} !</p>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <p>Ajouter un commentaire : </p>
+        {{ form_start(form) }}
+        {{ form_row(form.content) }}
+        <button type="submit">Publier le commentaire</button>
+        {{ form_end(form) }}
+    {% endif %}
+    <p>Les commentaires des internautes sur le jeu : </p>
+    <ul>
+        {% for comment in game.comments %}
+            <li>{{ comment.owner.username }} : {{ comment.content }}</li>
+        {% endfor %}
+    </ul>
     <a href="{{ path("index") }}">Revenir à l'accueil</a>
 
 {% endblock %}

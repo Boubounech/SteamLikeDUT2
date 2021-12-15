@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Comment;
 use App\Entity\Game;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\GameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,17 +54,32 @@ class GameController extends AbstractController
      */
     public function select(Game $game, Request $request): Response
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($game->getOwner());
+        $comment = new Comment();
+        if ($this->security->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
+            $user = $this->getUser();
+            $comment->setOwner($user);
+        }
+        $comment->setGame($game);
+        $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->getDoctrine()->getManager()->persist($comment);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute("game", ["id" => $game->getId()]);
+        }
+        $user = $game->getOwner();
+        $comments = $game->getComments();
         $connectedUser = $this->getUser();
         return $this->render("game/game.html.twig", [
             "game" => $game,
             "user" => $user,
-            "connectedUser" => $connectedUser
+            "comments" => $comments,
+            "connectedUser" => $connectedUser,
+            "form" => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/page", name="allGames")
+     * @Route("/biblio", name="allGames")
      * @return Response
      */
     public function allGamesPaginated(): Response
@@ -101,7 +118,7 @@ class GameController extends AbstractController
     /**
      * @Route("/changeGame-{id}", name="ChangeGameInfos")
      */
-    public function changeGameName(Game $game, Request $request) : Response
+    public function changeGame(Game $game, Request $request) : Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -109,12 +126,57 @@ class GameController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $em->persist($game);
             $em->flush();
-            return $this->redirectToRoute("OneGame", ["id" => $game->getId()]);
+            return $this->redirectToRoute("game", ["id" => $game->getId()]);
         }
 
-        return $this->render("changeGame.html.twig", [
-            "form" => $form->createView()
+        return $this->render("game/changeGame.html.twig", [
+            "form" => $form->createView(),
+            "game" => $game
         ]);
     }
 
+    /**
+     * @Route("/deleteGame-{id}", name="DeleteGame")
+     */
+    public function deleteGame(Game $game) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($game != null) {
+            $em->remove($game);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute("index");
+    }
+
+    /**
+     * @Route ("/redirect-{id}", name="RedirectToGameLink")
+     * @param Game $game
+     * @return Response
+     */
+    public function redirectToDownload(Game $game) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $game->setDlnumber($game->getDlnumber() + 1);
+        $em->persist($game);
+        $em->flush();
+        return $this->redirect($game->getLink());
+    }
+
+
+    /**
+     * @Route("/search", name="SearchGames", methods="GET")
+     */
+    public function researchGames(Request $request) : Response
+    {
+        $tit = $request->query->get('tit');
+        $cate = $request->query->get('cate');
+        $games = $this->getDoctrine()->getRepository(Game::class)->findByNameAndCategory($tit, $cate);
+        return $this->render("game/searchGames.html.twig", [
+            "games" => $games,
+            "title" => $tit,
+            "category" => $cate
+        ]);
+    }
 }

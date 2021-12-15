@@ -5,6 +5,7 @@
 {%  block body %}
     <h1>Bibliothèque</h1>
     <p>Ci-dessous, la liste de tous les jeux</p>
+    <a href="{{ path("SearchGames") }}">Rechercher des jeux</a>
     {% for game in games %}
         <h3>{{ game.title }}</h3>
         <a href="{{ path("game", {id:game.id}) }}">Voir plus.</a>

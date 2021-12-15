@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GameRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -74,9 +76,15 @@ class Game
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="game", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->dlNumber = 0;
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,6 +160,36 @@ class Game
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getGame() === $this) {
+                $comment->setGame(null);
+            }
+        }
 
         return $this;
     }

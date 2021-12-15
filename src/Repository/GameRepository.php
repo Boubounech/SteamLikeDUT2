@@ -19,6 +19,17 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
+    public function findByNameAndCategory(?string $title, ?string $cate): array
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT g
+            FROM App\Entity\Game AS g
+            WHERE g.title LIKE :title
+            AND g.category LIKE :category'
+        )->setParameters(array('title' => '%' . $title . '%', 'category' => '%' . $cate . '%'))
+            ->getResult();
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */
