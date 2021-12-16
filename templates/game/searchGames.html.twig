@@ -39,7 +39,7 @@
                 {% for game in games %}
                     <div class="GamesInList">
                         <h2>{{ game.title }}</h2>
-                        <p>{{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %}.</p>
+                        <p>{{ game.downloaders|length }} téléchargement{% if game.downloaders|length > 1 %}s{% endif %}.</p>
                         <a href="{{ path("game", {id:game.id}) }}">Voir plus sur ce jeu.</a>
                     </div>
                 {% endfor %}

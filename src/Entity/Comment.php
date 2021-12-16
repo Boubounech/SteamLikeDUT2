@@ -7,6 +7,12 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource(
+ *     collectionOperations={"get","post"},
+ *     itemOperations={"get", "put"},
+ *     normalizationContext={"groups"={"game:read"}},
+ *     denormalizationContext={"groups"={"game:write"}},
+ * )
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
 #[ApiResource]

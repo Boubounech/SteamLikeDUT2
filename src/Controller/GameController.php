@@ -49,7 +49,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/game-{id}", name="game")
+     * @Route("/game/{id}", name="game")
      * @return Response
      */
     public function select(Game $game, Request $request): Response
@@ -79,7 +79,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/biblio", name="allGames")
+     * @Route("/games", name="allGames")
      * @return Response
      */
     public function allGamesPaginated(): Response
@@ -91,7 +91,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/createGame", name="CreateGame")
+     * @Route("/games/create", name="CreateGame")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function createGame(Request $request) : Response
@@ -116,7 +116,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/changeGame-{id}", name="ChangeGameInfos")
+     * @Route("/game/{id}/modify", name="ChangeGameInfos")
      */
     public function changeGame(Game $game, Request $request) : Response
     {
@@ -136,7 +136,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/deleteGame-{id}", name="DeleteGame")
+     * @Route("/game/{id}/delete", name="DeleteGame")
      */
     public function deleteGame(Game $game) : Response
     {
@@ -151,14 +151,22 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route ("/redirect-{id}", name="RedirectToGameLink")
+     * @Route ("/game/{id}/redirect", name="RedirectToGameLink")
      * @param Game $game
      * @return Response
      */
     public function redirectToDownload(Game $game) : Response
     {
         $em = $this->getDoctrine()->getManager();
-        $game->setDlnumber($game->getDlnumber() + 1);
+        //$game->setDlnumber($game->getDlnumber() + 1);
+        $downloaders = $game->getDownloaders();
+        foreach ($downloaders as $downloader) {
+            if ($downloader == $this->getUser()) {
+                return $this->redirect($game->getLink());
+            }
+        }
+
+        $game->addDownloader($this->getUser());
         $em->persist($game);
         $em->flush();
         return $this->redirect($game->getLink());
@@ -178,5 +186,24 @@ class GameController extends AbstractController
             "title" => $tit,
             "category" => $cate
         ]);
+    }
+
+    /**
+     * @Route ("/game/{id}/like", name="LikeGame")
+     */
+    public function addLike(Game $game) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $likers = $game->getLikers();
+        foreach ($likers as $liker) {
+            if ($liker == $this->getUser()) {
+                return $this->redirectToRoute("game", ["id" => $game->getId()]);
+            }
+        }
+
+        $game->addLiker($this->getUser());
+        $em->persist($game);
+        $em->flush();
+        return $this->redirectToRoute("game", ["id" => $game->getId()]);
     }
 }

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/profile", name="app_profile")
+     * @Route("/my-profile", name="app_profile")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function profile(): Response

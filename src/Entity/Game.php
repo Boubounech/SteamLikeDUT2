@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @ApiResource(
  *     collectionOperations={"get","post"},
- *     itemOperations={"get", "put", "delete"},
+ *     itemOperations={"get", "put"},
  *     normalizationContext={"groups"={"game:read"}},
  *     denormalizationContext={"groups"={"game:write"}},
  * )
@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "title": "partial",
  *     "description": "partial",
  *     "owner": "exact",
- *     "owner.username": "partial"
+ *     "owner.username": "partial",
  * })
  *
  * @ORM\Entity(repositoryClass=GameRepository::class)
@@ -81,10 +81,23 @@ class Game
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class)
+     */
+    private $downloaders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class)
+     * @ORM\JoinTable(name="user_likes")
+     */
+    private $Likers;
+
     public function __construct()
     {
         $this->dlNumber = 0;
         $this->comments = new ArrayCollection();
+        $this->downloaders = new ArrayCollection();
+        $this->Likers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +203,54 @@ class Game
                 $comment->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getDownloaders(): Collection
+    {
+        return $this->downloaders;
+    }
+
+    public function addDownloader(User $downloader): self
+    {
+        if (!$this->downloaders->contains($downloader)) {
+            $this->downloaders[] = $downloader;
+        }
+
+        return $this;
+    }
+
+    public function removeDownloader(User $downloader): self
+    {
+        $this->downloaders->removeElement($downloader);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getLikers(): Collection
+    {
+        return $this->Likers;
+    }
+
+    public function addLiker(User $liker): self
+    {
+        if (!$this->Likers->contains($liker)) {
+            $this->Likers[] = $liker;
+        }
+
+        return $this;
+    }
+
+    public function removeLiker(User $liker): self
+    {
+        $this->Likers->removeElement($liker);
 
         return $this;
     }

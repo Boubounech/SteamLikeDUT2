@@ -18,6 +18,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
+ *     collectionOperations={"get","post"},
+ *     itemOperations={"get", "put"},
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
  * )

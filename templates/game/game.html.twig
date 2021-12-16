@@ -11,7 +11,8 @@
                 <p class="GameInfoPart">Description : <p>{{ game.description }}</p></p>
                 <p class="GameInfoPart">Catégorie : <p>{{ game.category }}</p></p>
                 <p class="GameInfoPart">Télécharger le jeu : <p><a href="{{ path("RedirectToGameLink", {id:game.id}) }}">{{ game.link }}</a></p></p>
-                <p class="GameInfoPart" style="text-decoration: none">Déja {{ game.dlNumber }} téléchargement{% if game.dlNumber > 1 %}s{% endif %} !</p>
+                <p class="GameInfoPart" style="text-decoration: none">Déja {{ game.downloaders|length }} téléchargement{% if game.downloaders|length > 1 %}s{% endif %} !</p>
+                <p class="GameInfoPart" style="text-decoration: none">{{ game.likers|length }} utilisateur{% if game.likers|length > 1 %}s{% endif %} aime{% if game.likers|length > 1 %}nt{% endif %} ce jeu</p>
                 <p></p>
                 <div>
                     {% if user == connectedUser %}
@@ -22,6 +23,7 @@
             </div>
             <div class="Comments">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <a href="{{ path("LikeGame", {id:game.id}) }}">Liker ce jeu</a>
                     <p>Ajouter un commentaire : </p>
                     <div class="NewComment">
                         {{ form_start(form) }}
