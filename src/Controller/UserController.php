@@ -16,7 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/my-profile", name="app_profile")
+     * @Route("/api/me", name="api_me")
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function apiMe()
+    {
+        return $this->json($this->getUser(), 200, [], [
+            'groups' => ['user:read']
+        ]);
+    }
+
+
+    /**
+     * @Route("/my-profile", name="app_profile", methods="GET")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function profile(): Response
@@ -29,7 +41,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/changeInfos", name="ChangeInfos")
+     * @Route("/changeInfos", name="ChangeInfos", methods="PUT")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      * @return Response
      */

@@ -26,7 +26,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="index", methods="GET")
      * @return Response
      */
     public function index(): Response
@@ -38,18 +38,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/api/me", name="api_me")
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
-     */
-    public function apiMe()
-    {
-        return $this->json($this->getUser(), 200, [], [
-            'groups' => ['user:read']
-        ]);
-    }
-
-    /**
-     * @Route("/game/{id}", name="game")
+     * @Route("/game/{id}", name="game", methods="GET")
      * @return Response
      */
     public function select(Game $game, Request $request): Response
@@ -79,7 +68,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/games", name="allGames")
+     * @Route("/games", name="allGames", methods="GET")
      * @return Response
      */
     public function allGamesPaginated(): Response
@@ -91,7 +80,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/games/create", name="CreateGame")
+     * @Route("/games/create", name="CreateGame", methods="POST")
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function createGame(Request $request) : Response
@@ -116,7 +105,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/game/{id}/modify", name="ChangeGameInfos")
+     * @Route("/game/{id}/modify", name="ChangeGameInfos", methods="PUT")
      */
     public function changeGame(Game $game, Request $request) : Response
     {
@@ -136,7 +125,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/game/{id}/delete", name="DeleteGame")
+     * @Route("/game/{id}/delete", name="DeleteGame", methods="DELETE")
      */
     public function deleteGame(Game $game) : Response
     {
